@@ -11,6 +11,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import androidx.fragment.app.Fragment;
+import android.widget.TextView;
 
 public class CrimeFragment extends Fragment {
     private Crime mCrime;
@@ -43,16 +44,21 @@ public class CrimeFragment extends Fragment {
             public void afterTextChanged(Editable s) {
                 // И здесь тоже
             }
-
-            mSolvedCheckBox = (CheckBox) v.findViewById(R.id.crime_solved);
-            mSolvedCheckBox.setOnCheckedChanger(new OnCheckedChangeListener(){
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
-                    mCrime.setSolved(isChecked);
-                }
-            }
-
         });
+        mSolvedCheckBox = (CheckBox)v.findViewById(R.id.crime_solved);
+        mSolvedCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                mCrime.setSolved(b);
+            }
+        });
+
+
+
+//                new OnCheckedChangeListener(){
+//                    @Override
+//                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                        mCrime.setSolved(isChecked);}});
 
         mDateButton = (Button) v.findViewById(R.id.crime_date);
         mDateButton.setText(mCrime.getDate().toString());
