@@ -54,12 +54,6 @@ public class CrimeFragment extends Fragment {
         });
 
 
-
-//                new OnCheckedChangeListener(){
-//                    @Override
-//                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                        mCrime.setSolved(isChecked);}});
-
         mDateButton = (Button) v.findViewById(R.id.crime_date);
         mDateButton.setText(mCrime.getDate().toString());
         mDateButton.setEnabled(false);
