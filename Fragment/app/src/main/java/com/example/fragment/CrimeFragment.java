@@ -1,14 +1,61 @@
 package com.example.fragment;
 
+import java.util.Date;
+import java.util.UUID;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.EditText;
 import androidx.fragment.app.Fragment;
 
 public class CrimeFragment extends Fragment {
-    private ImageButton mPhotoButton;
-    private ImageView mPhotoView;
-    private Callbacks mCallbacks;
+    private Crime mCrime;
+    private EditText mTitleField;
+    private Button mDateButton;
+    private CheckBox mSolvedCheckBox;
+    private CrimeListFragment.Callbacks mCallbacks;
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mCrime = new Crime();
+    }
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        mTitleField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                mCrime.setTitle(s.toString());
+                updateCrime();
+            }
+        });
+        mSolvedCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                mCrime.setSolved(isChecked);
+                updateCrime();
+            }
+        });
+    }
+    public interface Callbacks {
+        void onCrimeUpdated(Crime crime);
+    }
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mCallbacks = (CrimeListFragment.Callbacks) context;
+    }
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mCallbacks = null;
     }
     private void updateCrime() {
         CrimeLab.get(getActivity()).updateCrime(mCrime);
@@ -17,28 +64,27 @@ public class CrimeFragment extends Fragment {
     private void updateDate() {
         mDateButton.setText(mCrime.getDate().toString());
     }
-    public interface Callbacks {
-        void onCrimeUpdated(Crime crime);
-    }
-    public static CrimeFragment newInstance(UUID crimeId) {
- //...
-    }
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        mCallbacks = (Callbacks) context;
-    }
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
- //...
-    }
-    @Override
-    public void onPause() {
- //...
-    }
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mCallbacks = null;
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_DATE) {
+            Date date = (Date) data
+                    .getSerializableExtra(DatePickerFragment.EXTRA_DATE);
+            mCrime.setDate(date);
+            updateCrime();
+            updateDate();
+        } else if (requestCode == REQUEST_CONTACT && data != null) {
+            try {
+                String suspect = c.getString(0);
+                mCrime.setSuspect(suspect);
+                updateCrime();
+                mSuspectButton.setText(suspect);
+            } finally {
+                c.close();
+            }
+        } else if (requestCode == REQUEST_PHOTO) {
+            getActivity().revokeUriPermission(uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            updateCrime();
+            updatePhotoView();
+        }
     }
 }
