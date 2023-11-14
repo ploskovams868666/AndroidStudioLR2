@@ -51,7 +51,7 @@ public class CrimeFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mCallbacks = (CrimeListFragment.Callbacks) context;
+        mCallbacks = (CrimeListFragment.Callbacks) context;//эта строка не совпадает
     }
     @Override
     public void onDetach() {
