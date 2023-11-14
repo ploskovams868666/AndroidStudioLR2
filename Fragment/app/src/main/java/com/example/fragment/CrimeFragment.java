@@ -43,6 +43,7 @@ public class CrimeFragment extends Fragment {
                 updateCrime();
             }
         });
+//return??
     }
     public interface Callbacks {
         void onCrimeUpdated(Crime crime);

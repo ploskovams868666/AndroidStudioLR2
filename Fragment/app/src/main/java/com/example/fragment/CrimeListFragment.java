@@ -31,7 +31,7 @@ public class CrimeListFragment extends Fragment {
                 mCallbacks.onCrimeSelected(crime);
                 return true;
         }
-        else return false;
+        else return false;//убрать потом
     }
     @Override
     public void onAttach(Context context) {
@@ -56,7 +56,7 @@ public class CrimeListFragment extends Fragment {
     private class CrimeHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener {
         public CrimeHolder(@NonNull View itemView) {
-            super(itemView);
+            super(itemView);//
         }
         @Override
         public void onClick(View view) {

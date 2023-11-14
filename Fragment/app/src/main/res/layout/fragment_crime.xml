@@ -1,47 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
 
     <ImageView
         android:id="@+id/crime_photo"
-        android:layout_width="796dp"
-        android:layout_height="511dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:background="@android:color/darker_gray"
-        android:contentDescription="@string/crime_photo_no_image_description"
         android:cropToPadding="true"
         android:focusable="true"
         android:scaleType="centerInside"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.165"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.175" />
+        android:contentDescription="@string/crime_photo_no_image_description"/>
 
     <ImageButton
         android:id="@+id/crime_camera"
-        android:layout_width="1545dp"
-        android:layout_height="240dp"
-        android:contentDescription="@string/crime_photo_button_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:src="@android:drawable/ic_menu_camera"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:contentDescription="@string/crime_photo_button_description"/>
 
     <TextView
         android:id="@+id/textView"
         style="?android:listSeparatorTextViewStyle"
-        android:layout_width="1066dp"
-        android:layout_height="399dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:labelFor="@+id/crime_title"
-        android:text="@string/crime_title_label"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/crime_camera" />
+        android:text="@string/crime_title_label" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
