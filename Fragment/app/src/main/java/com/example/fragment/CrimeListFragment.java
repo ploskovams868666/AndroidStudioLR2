@@ -13,11 +13,12 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
+import androidx.recyclerview.widget.ItemTouchHelper;//упр 1
 
 public class CrimeListFragment extends Fragment {
     private boolean mSubtitleVisible;
     private Callbacks mCallbacks;
-    public void updateUI(){
+    public void updateUI(){//дописать, public оставить
     }
     public interface Callbacks {
         void onCrimeSelected(Crime crime);

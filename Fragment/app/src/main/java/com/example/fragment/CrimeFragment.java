@@ -15,35 +15,18 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;//упр 1
 
 public class CrimeFragment extends Fragment {
     private Crime mCrime;
     private EditText mTitleField;
     private Button mDateButton;
     private CheckBox mSolvedCheckBox;
-    private CrimeListFragment.Callbacks mCallbacks;
+    private Callbacks mCallbacks;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mCrime = new Crime();
-    }
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mTitleField.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                mCrime.setTitle(s.toString());
-                updateCrime();
-            }
-        });
-        mSolvedCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                mCrime.setSolved(isChecked);
-                updateCrime();
-            }
-        });
-//return??
     }
     public interface Callbacks {
         void onCrimeUpdated(Crime crime);
@@ -51,7 +34,7 @@ public class CrimeFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mCallbacks = (CrimeListFragment.Callbacks) context;//эта строка не совпадает
+        mCallbacks = (Callbacks) context;
     }
     @Override
     public void onDetach() {
@@ -71,33 +54,49 @@ public class CrimeFragment extends Fragment {
             Date date = (Date) data
                     .getSerializableExtra(DatePickerFragment.EXTRA_DATE);
             mCrime.setDate(date);
-            updateCrime();
+            updateCrime();// это оставить
             updateDate();
         } else if (requestCode == REQUEST_CONTACT && data != null) {
             try {
                 String suspect = c.getString(0);
                 mCrime.setSuspect(suspect);
-                updateCrime();
+                updateCrime();// оставить
                 mSuspectButton.setText(suspect);
             } finally {
                 c.close();
             }
         } else if (requestCode == REQUEST_PHOTO) {
             getActivity().revokeUriPermission(uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-            updateCrime();
+            updateCrime();// оставить
             updatePhotoView();
         }
     }
     private void updatePhotoView() {
         if (mPhotoFile == null || !mPhotoFile.exists()) {
             mPhotoView.setImageDrawable(null);
-            mPhotoView.setContentDescription(
-                    getString(R.string.crime_photo_no_image_description));
+            mPhotoView.setContentDescription(getString(R.string.crime_photo_no_image_description));//оставить
         }
         else {
             mPhotoView.setImageBitmap(bitmap);
-            mPhotoView.setContentDescription(
-                    getString(R.string.crime_photo_image_description));
+            mPhotoView.setContentDescription(getString(R.string.crime_photo_image_description));//оставить
         }
+    }
+    @Override//мб переписать все вот это ниже
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        mTitleField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                mCrime.setTitle(s.toString());
+                updateCrime();//это оставить
+            }
+        });
+        mSolvedCheckbox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView,
+                                         boolean isChecked) {
+                mCrime.setSolved(isChecked);
+                updateCrime();//это оставить
+            }
+        });
     }
 }
