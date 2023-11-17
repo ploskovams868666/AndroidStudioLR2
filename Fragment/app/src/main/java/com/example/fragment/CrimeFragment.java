@@ -2,8 +2,12 @@ package com.example.fragment;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.format.DateFormat;
@@ -17,8 +21,10 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
+import java.util.List;
 import java.util.UUID;
 
 public class CrimeFragment extends Fragment {
@@ -33,6 +39,7 @@ public class CrimeFragment extends Fragment {
     private static final String ARG_CRIME_ID = "crime_id";
     private static final int REQUEST_DATE = 0;
     private static final int REQUEST_CONTACT = 1;
+    private static final int REQUEST_PHOTO= 2;
     public static CrimeFragment newInstance(UUID crimeId) {
         Bundle args = new Bundle();
         args.putSerializable(ARG_CRIME_ID, crimeId);
@@ -77,6 +84,16 @@ public class CrimeFragment extends Fragment {
                     mCrime.getTitle(), dateString, solvedString, suspect);
             return report;
         }
+        private void updatePhotoView() {
+            if (mPhotoFile == null || !mPhotoFile.exists()) {
+                mPhotoView.setImageDrawable(null);
+            } else {
+                Bitmap bitmap = PictureUtils.getScaledBitmap(
+                        mPhotoFile.getPath(), getActivity());
+                mPhotoView.setImageBitmap(bitmap);
+            }
+        }
+    }
     }
 
         @Override
@@ -89,7 +106,6 @@ public class CrimeFragment extends Fragment {
             @Override
             public void beforeTextChanged(
                     CharSequence s, int start, int count, int after) {
-                // Здесь намеренно оставлено пустое место
             }
             @Override
             public void onTextChanged(
@@ -144,8 +160,30 @@ public class CrimeFragment extends Fragment {
                 mSuspectButton.setEnabled(false);
             }
             mPhotoButton = (ImageButton) v.findViewById(R.id.crime_camera);
+            final Intent captureImage = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            boolean canTakePhoto = mPhotoFile != null &&
+                    captureImage.resolveActivity(packageManager) != null;
+            mPhotoButton.setEnabled(canTakePhoto);
+            mPhotoButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Uri uri = FileProvider.getUriForFile(getActivity(),
+                            "com.bignerdranch.android.criminalintent.fileprovider",
+                            mPhotoFile);
+                    captureImage.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+                    List<ResolveInfo> cameraActivities = getActivity()
+                            .getPackageManager().queryIntentActivities(captureImage,
+                                    PackageManager.MATCH_DEFAULT_ONLY);
+                    for (ResolveInfo activity : cameraActivities) {
+                        getActivity().grantUriPermission(activity.activityInfo.packageName,
+                                uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                    }
+                    startActivityForResult(captureImage, REQUEST_PHOTO);
+                }
+            });
             mPhotoView = (ImageView) v.findViewById(R.id.crime_photo);
-        return v;
+            updatePhotoView();
+            return v;
     }
 }
 }
