@@ -1,8 +1,10 @@
 package com.example.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -185,5 +187,49 @@ public class CrimeFragment extends Fragment {
             updatePhotoView();
             return v;
     }
-}
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != Activity.RESULT_OK) {
+            return;
+        }
+        if (requestCode == REQUEST_DATE) {
+            Date date = (Date) data.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
+            mCrime.setDate(date);
+            updateDate();
+        } else if (requestCode == REQUEST_CONTACT && data != null) {
+        Uri contactUri = data.getData();
+        // Определение полей, значения которых должны быть
+        // возвращены запросом.
+        String[] queryFields = new String[] {
+        ContactsContract.Contacts.DISPLAY_NAME
+        };
+        // Выполнение запроса - contactUri здесь выполняет функции
+        // условия "where"
+        Cursor c = getActivity().getContentResolver()
+        .query(contactUri, queryFields, null, null, null);
+        try {
+        // Проверка получения результатов
+        if (c.getCount() == 0) {
+        return;
+        }
+        // Извлечение первого столбца данных - имени подозреваемого.
+        c.moveToFirst();
+        String suspect = c.getString(0);
+        mCrime.setSuspect(suspect);
+        mSuspectButton.setText(suspect);
+        } finally {
+        c.close();
+        }
+        } else if (requestCode == REQUEST_PHOTO) {
+        Uri uri = FileProvider.getUriForFile(getActivity(),
+        "com.bignerdranch.android.criminalintent.fileprovider",
+        mPhotoFile);
+        getActivity().revokeUriPermission(uri,
+        Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+        updatePhotoView();
+        }
+    }
+    private static void updateDate() {
+        mDateButton.setText(mCrime.getDate().toString());
+    }
 }
