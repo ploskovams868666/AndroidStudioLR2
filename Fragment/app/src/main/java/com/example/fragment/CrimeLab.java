@@ -109,3 +109,7 @@ public class CrimeLab {
         return values;
     }
 }
+
+    public void updateCrime(Crime mCrime) {
+    }
+}
