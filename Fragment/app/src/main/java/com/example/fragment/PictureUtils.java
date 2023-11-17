@@ -11,3 +11,4 @@ public class PictureUtils {
                 .getSize(size);
         return getScaledBitmap(path, size.x, size.y);
 }
+}

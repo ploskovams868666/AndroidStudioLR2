@@ -23,7 +23,7 @@ public class CrimeLab {
     private File mPhotoFile;
     private EditText mTitleField;
 
-    @Override
+    //@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         UUID crimeId = (UUID) getArguments().getSerializable(ARG_CRIME_ID);
@@ -37,6 +37,7 @@ public class CrimeLab {
         }
         return sCrimeLab;
     }
+
     private CrimeLab(Context context) {
         mContext = context.getApplicationContext();
         mDatabase = new CrimeBaseHelper(mContext).getWritableDatabase();
@@ -45,6 +46,7 @@ public class CrimeLab {
         ContentValues values = getContentValues(c);
         mDatabase.insert(CrimeTable.NAME, null, values);
     }
+
     public List<Crime> getCrimes() {
 
         List<Crime> crimes = new ArrayList<>();
@@ -60,6 +62,7 @@ public class CrimeLab {
         }
         return crimes;
     }
+
     public Crime getCrime(UUID id) {
         CrimeCursorWrapper cursor = queryCrimes(
                 CrimeTable.Cols.UUID + " = ?",

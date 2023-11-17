@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-
-    package="com.bignerdranch.android.criminalintent" >
     <uses-feature android:name="android.hardware.camera"
         android:required="false"
         />
@@ -34,6 +32,11 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/files"/>
         </provider>
+        <activity
+            android:name=".CrimePagerActivity"
+            android:parentActivityName=".CrimeListActivity">
+        </activity>
+
     </application>
 
 </manifest>
