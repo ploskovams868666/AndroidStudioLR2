@@ -2,14 +2,11 @@ package com.example.fragment;
 
 import android.app.Activity;
 import android.content.Intent;
-<<<<<<< HEAD
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
-=======
->>>>>>> b4d11f4a109a25b00c1ce0888d856ff704baca18
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.provider.MediaStore;
@@ -25,11 +22,9 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-
-<<<<<<< HEAD
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
-
+import java.io.File;
 import java.util.List;
 import java.util.Date;
 import java.util.UUID;
@@ -39,6 +34,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 public class CrimeFragment extends Fragment {
+    private File mPhotoFile;
     private static Crime mCrime;
     private EditText mTitleField;
     private static Button mDateButton;
@@ -67,6 +63,7 @@ public class CrimeFragment extends Fragment {
         super.onCreate(savedInstanceState);
         UUID crimeId = (UUID) getArguments().getSerializable(ARG_CRIME_ID);
         mCrime = CrimeLab.get(getActivity()).getCrime(crimeId);
+        mPhotoFile = CrimeLab.get(getActivity()).getPhotoFile(mCrime);
     }
 
     @Override
@@ -76,11 +73,10 @@ public class CrimeFragment extends Fragment {
                 .updateCrime(mCrime);
     }
 
-    @Override
     private void updateDate() {
         mDateButton.setText(mCrime.getDate().toString());
-
-        private String getCrimeReport () {
+    }
+        private String getCrimeReport() {
             String solvedString = null;
             if (mCrime.isSolved()) {
                 solvedString = getString(R.string.crime_report_solved);
@@ -100,7 +96,7 @@ public class CrimeFragment extends Fragment {
                     mCrime.getTitle(), dateString, solvedString, suspect);
             return report;
         }
-        private void updatePhotoView () {
+        private void updatePhotoView() {
             if (mPhotoFile == null || !mPhotoFile.exists()) {
                 mPhotoView.setImageDrawable(null);
             } else {
@@ -249,7 +245,7 @@ public class CrimeFragment extends Fragment {
     private void updateDate() {
         mDateButton.setText(mCrime.getDate().toString());
 
-
+////////////////////////////////////
         mDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
