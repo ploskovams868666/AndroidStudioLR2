@@ -1,10 +1,6 @@
 package com.example.fragment;
 
-<<<<<<< HEAD
 import androidx.fragment.app.Fragment;
-
-=======
->>>>>>> b4d11f4a109a25b00c1ce0888d856ff704baca18
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -95,26 +91,25 @@ public class CrimeListFragment extends Fragment {
 
     private class CrimeAdapter extends RecyclerView.Adapter<CrimeHolder> {
         private List<Crime> mCrimes;
-
         public CrimeAdapter(List<Crime> crimes) {
             mCrimes = crimes;
         }
-
         @Override
         public CrimeHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
             return new CrimeHolder(layoutInflater, parent);
         }
-
         @Override
         public void onBindViewHolder(CrimeHolder holder, int position) {
             Crime crime = mCrimes.get(position);
             holder.bind(crime);
         }
-
         @Override
         public int getItemCount() {
             return mCrimes.size();
+        }
+        public void setCrimes(List<Crime> crimes) {
+            mCrimes = crimes;
         }
     }
 
@@ -167,22 +162,5 @@ public class CrimeListFragment extends Fragment {
         //activity.getSupportActionBar().setSubtitle(subtitle);
         //без этого работает (почти)
     }
-        private void updateUI() {
-            CrimeLab crimeLab = CrimeLab.get(getActivity());
-            List<Crime> crimes = crimeLab.getCrimes();
-            if (mAdapter == null) {
-                mAdapter = new CrimeAdapter(crimes);
-                mCrimeRecyclerView.setAdapter(mAdapter);
-
-            } else {
-                mAdapter.notifyDataSetChanged();
-            }
-            updateSubtitle();
-        }
-        @Override
-        public void onResume() {
-            super.onResume();
-            updateUI();
-        }
-    }
+}
 
