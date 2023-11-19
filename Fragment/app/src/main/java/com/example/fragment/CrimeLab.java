@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.widget.EditText;
 import com.example.fragment.database.CrimeBaseHelper;
 import com.example.fragment.database.CrimeCursorWrapper;
+import com.example.fragment.database.CrimeDbSchema;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,13 +22,14 @@ public class CrimeLab {
     private File mPhotoFile;
     private EditText mTitleField;
 
-    //@Override
+    /*@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         UUID crimeId = (UUID) getArguments().getSerializable(ARG_CRIME_ID);
         mCrime = CrimeLab.get(getActivity()).getCrime(crimeId);
         mPhotoFile = CrimeLab.get(getActivity()).getPhotoFile(mCrime);
-    }
+    }*/
+    // мб из другого файла
 
     public static CrimeLab get(Context context) {
         if (sCrimeLab == null) {
@@ -81,16 +83,17 @@ public class CrimeLab {
         return new File(filesDir, crime.getPhotoFilename());
         if (externalFilesDir == null) {
         }
+    }
     public void updateCrime(Crime crime) {
         String uuidString = crime.getId().toString();
         ContentValues values = getContentValues(crime);
-        mDatabase.update(CrimeTable.NAME, values,
-                CrimeTable.Cols.UUID + " = ?",
+        mDatabase.update(CrimeDbSchema.CrimeTable.NAME, values,
+                CrimeDbSchema.CrimeTable.Cols.UUID + " = ?",
                 new String[] { uuidString });
     }
     private CrimeCursorWrapper queryCrimes(String whereClause, String[] whereArgs) {
         Cursor cursor = mDatabase.query(
-                CrimeTable.NAME,
+                CrimeDbSchema.CrimeTable.NAME,
                 null,
                 whereClause,
                 whereArgs,
@@ -102,15 +105,11 @@ public class CrimeLab {
     }
         private static ContentValues getContentValues(Crime crime) {
         ContentValues values = new ContentValues();
-        values.put(CrimeTable.Cols.UUID, crime.getId().toString());
-        values.put(CrimeTable.Cols.TITLE, crime.getTitle());
-        values.put(CrimeTable.Cols.DATE, crime.getDate().getTime());
-        values.put(CrimeTable.Cols.SOLVED, crime.isSolved() ? 1 : 0);
-        values.put(CrimeTable.Cols.SUSPECT, crime.getSuspect());
+        values.put(CrimeDbSchema.CrimeTable.Cols.UUID, crime.getId().toString());
+        values.put(CrimeDbSchema.CrimeTable.Cols.TITLE, crime.getTitle());
+        values.put(CrimeDbSchema.CrimeTable.Cols.DATE, crime.getDate().getTime());
+        values.put(CrimeDbSchema.CrimeTable.Cols.SOLVED, crime.isSolved() ? 1 : 0);
+        values.put(CrimeDbSchema.CrimeTable.Cols.SUSPECT, crime.getSuspect());
         return values;
-    }
-}
-
-    public void updateCrime(Crime mCrime) {
     }
 }

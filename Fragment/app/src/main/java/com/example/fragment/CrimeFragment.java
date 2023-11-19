@@ -24,6 +24,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
+import java.io.File;
 import java.util.List;
 import java.util.Date;
 import java.util.UUID;
@@ -33,6 +34,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 public class CrimeFragment extends Fragment {
+    private File mPhotoFile;
     private static Crime mCrime;
     private EditText mTitleField;
     private static Button mDateButton;
@@ -60,6 +62,7 @@ public class CrimeFragment extends Fragment {
         super.onCreate(savedInstanceState);
         UUID crimeId = (UUID) getArguments().getSerializable(ARG_CRIME_ID);
         mCrime = CrimeLab.get(getActivity()).getCrime(crimeId);
+        mPhotoFile = CrimeLab.get(getActivity()).getPhotoFile(mCrime);
     }
 
     @Override
@@ -69,79 +72,66 @@ public class CrimeFragment extends Fragment {
                 .updateCrime(mCrime);
     }
 
-    @Override
     private void updateDate() {
         mDateButton.setText(mCrime.getDate().toString());
-
-        private String getCrimeReport () {
-            String solvedString = null;
-            if (mCrime.isSolved()) {
-                solvedString = getString(R.string.crime_report_solved);
-            } else {
-                solvedString = getString(R.string.crime_report_unsolved);
-            }
-            String dateFormat = "EEE, MMM dd";
-            String dateString = DateFormat.format(dateFormat,
-                    mCrime.getDate()).toString();
-            String suspect = mCrime.getSuspect();
-            if (suspect == null) {
-                suspect = getString(R.string.crime_report_no_suspect);
-            } else {
-                suspect = getString(R.string.crime_report_suspect, suspect);
-            }
-            String report = getString(R.string.crime_report,
-                    mCrime.getTitle(), dateString, solvedString, suspect);
-            return report;
-        }
-        private void updatePhotoView () {
-            if (mPhotoFile == null || !mPhotoFile.exists()) {
-                mPhotoView.setImageDrawable(null);
-            } else {
-                Bitmap bitmap = PictureUtils.getScaledBitmap(
-                        mPhotoFile.getPath(), getActivity());
-                mPhotoView.setImageBitmap(bitmap);
-            }
-        }
     }
 
+    private String getCrimeReport() {
+        String solvedString = null;
+        if (mCrime.isSolved()) {
+            solvedString = getString(R.string.crime_report_solved);
+        } else {
+            solvedString = getString(R.string.crime_report_unsolved);
+        }
+        String dateFormat = "EEE, MMM dd";
+        String dateString = DateFormat.format(dateFormat, mCrime.getDate()).toString();
+        String suspect = mCrime.getSuspect();
+        if (suspect == null) {
+            suspect = getString(R.string.crime_report_no_suspect);
+        }
+        else {
+            suspect = getString(R.string.crime_report_suspect, suspect);
+        }
+        String report = getString(R.string.crime_report,
+                    mCrime.getTitle(), dateString, solvedString, suspect);
+        return report;
+    }
+    private void updatePhotoView() {
+        if (mPhotoFile == null || !mPhotoFile.exists()) {
+            mPhotoView.setImageDrawable(null);
+        } else {
+            Bitmap bitmap = PictureUtils.getScaledBitmap(
+                    mPhotoFile.getPath(), getActivity());
+            mPhotoView.setImageBitmap(bitmap);
+        }
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         View v = inflater.inflate(R.layout.fragment_crime, container, false);
 
         mTitleField = (EditText) v.findViewById(R.id.crime_title);
-        mTitleField.setText(mCrime.getTitle());
+        mTitleField.setText(mCrime.getTitle());////////////////
         mTitleField.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(
-                    CharSequence s, int start, int count, int after) {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                //пусто
             }
-
             @Override
-            public void onTextChanged(
-                    CharSequence s, int start, int before, int count) {
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
                 mCrime.setTitle(s.toString());
             }
-
             @Override
             public void afterTextChanged(Editable s) {
-            }
-        });
-        mSolvedCheckBox = (CheckBox) v.findViewById(R.id.crime_solved);
-        mSolvedCheckBox.setChecked(mCrime.isSolved());
-
-        mSolvedCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                mCrime.setSolved(b);
+                //пусто
             }
         });
 
         mDateButton = (Button) v.findViewById(R.id.crime_date);
-
-        mDateButton.setText(mCrime.getDate().toString());
-        mDateButton.setEnabled(false);
-        mReportButton = (Button) v.findViewById(R.id.crime_report);
+        updateDate();
+        mReportButton = (Button) v.findViewById(R.id.crime_report);////////////
         mReportButton.setOnClickListener(new View.OnClickListener() {
+            @Override//////
             public void onClick(View v) {
                 Intent i = new Intent(Intent.ACTION_SEND);
                 i.setType("text/plain");
@@ -152,6 +142,17 @@ public class CrimeFragment extends Fragment {
                 startActivity(i);
             }
         });
+
+        mSolvedCheckBox = (CheckBox) v.findViewById(R.id.crime_solved);
+        mSolvedCheckBox.setChecked(mCrime.isSolved());
+        mSolvedCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                mCrime.setSolved(b);
+            }
+        });
+
+
         final Intent pickContact = new Intent(Intent.ACTION_PICK,
                 ContactsContract.Contacts.CONTENT_URI);
         pickContact.addCategory(Intent.CATEGORY_HOME);
@@ -239,10 +240,11 @@ public class CrimeFragment extends Fragment {
         }
     }
 }
+
    /* private void updateDate() {
         mDateButton.setText(mCrime.getDate().toString());
 
-
+////////////////////////////////////
         mDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -255,8 +257,8 @@ public class CrimeFragment extends Fragment {
         });
         mSolvedCheckBox = (CheckBox) v.findViewById(R.id.crime_solved);
         return v;
-    }
-    @Override
+    }*/
+   /* @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode != Activity.RESULT_OK) {
             return;
