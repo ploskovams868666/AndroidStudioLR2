@@ -1,10 +1,6 @@
 package com.example.fragment;
 
-<<<<<<< HEAD
 import androidx.fragment.app.Fragment;
-
-=======
->>>>>>> b4d11f4a109a25b00c1ce0888d856ff704baca18
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -82,7 +78,7 @@ public class CrimeListFragment extends Fragment {
 
         @Override
         public void onClick(View view) {
-            Intent intent = CrimeActivity.newIntent(getActivity(), mCrime.getId());
+            Intent intent = CrimePagerActivity.newIntent(getActivity(), mCrime.getId());
             startActivity(intent);
         }
         public void bind(Crime crime) {

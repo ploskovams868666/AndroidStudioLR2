@@ -2,14 +2,11 @@ package com.example.fragment;
 
 import android.app.Activity;
 import android.content.Intent;
-<<<<<<< HEAD
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
-=======
->>>>>>> b4d11f4a109a25b00c1ce0888d856ff704baca18
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.provider.MediaStore;
@@ -25,11 +22,8 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-
-<<<<<<< HEAD
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
-
 import java.util.List;
 import java.util.Date;
 import java.util.UUID;
@@ -51,7 +45,6 @@ public class CrimeFragment extends Fragment {
     private static final int REQUEST_DATE = 0;
     private static final int REQUEST_CONTACT = 1;
     private static final int REQUEST_PHOTO = 2;
-
     private static final String DIALOG_DATE = "DialogDate";
 
     public static CrimeFragment newInstance(UUID crimeId) {
@@ -245,8 +238,8 @@ public class CrimeFragment extends Fragment {
             updatePhotoView();
         }
     }
-
-    private void updateDate() {
+}
+   /* private void updateDate() {
         mDateButton.setText(mCrime.getDate().toString());
 
 
@@ -274,5 +267,5 @@ public class CrimeFragment extends Fragment {
             updateDate();
         }
     }
-}
+}*/
 

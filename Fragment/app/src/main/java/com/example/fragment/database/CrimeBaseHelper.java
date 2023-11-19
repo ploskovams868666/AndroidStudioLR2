@@ -3,7 +3,6 @@ package com.example.fragment.database;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
 import com.example.fragment.Crime;
 import com.example.fragment.database.CrimeDbSchema.CrimeTable;
 
@@ -17,12 +16,11 @@ public class CrimeBaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db){
-        db.execSQL("create table" + CrimeTable.NAME + "(" + " _id integer primary key autoincrement, " + CrimeTable.Cols.UUID + ", " + CrimeTable.Cols.TITLE + ", " + CrimeTable.Cols.DATE + ", " + CrimeTable.Cols.Solved + CrimeTable.Cols.SUSPECT + ")"
-        );
+        db.execSQL("create table " + CrimeTable.NAME + "(" + " _id integer primary key autoincrement, " + CrimeTable.Cols.UUID + ", " + CrimeTable.Cols.TITLE + ", " + CrimeTable.Cols.DATE + ", " + CrimeTable.Cols.Solved + CrimeTable.Cols.SUSPECT + ")");
     }
 
     @Override
-    public void onUdgrade(SQLiteDatabase db, int oldVersion, int newVersion){
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     }
 }

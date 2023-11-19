@@ -6,10 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.widget.EditText;
-
 import com.example.fragment.database.CrimeBaseHelper;
 import com.example.fragment.database.CrimeCursorWrapper;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
