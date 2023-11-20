@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.viewpager.widget.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/crime_view_pager"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,4 +7,4 @@
     tools:context=".CrimePagerActivity">
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.viewpager.widget.ViewPager>
