@@ -59,7 +59,7 @@ public class CrimeListFragment extends Fragment {
             mAdapter.setCrimes(crimes);
             mAdapter.notifyDataSetChanged();
         }
-        updateSubtitles();
+        updateSubtitle();
     }
 
 
@@ -158,9 +158,8 @@ public class CrimeListFragment extends Fragment {
         if (!mSubtitleVisible) {
             subtitle = null;
         }
-        //AppCompatActivity activity = (AppCompatActivity) getActivity();
-        //activity.getSupportActionBar().setSubtitle(subtitle);
-        //без этого работает (почти)
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        activity.getSupportActionBar().setSubtitle(subtitle);
     }
 }
 

@@ -68,8 +68,7 @@ public class CrimeFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        CrimeLab.get(getActivity())
-                .updateCrime(mCrime);
+        CrimeLab.get(getActivity()).updateCrime(mCrime);
     }
 
     private void updateDate() {
@@ -129,8 +128,19 @@ public class CrimeFragment extends Fragment {
 
         mDateButton = (Button) v.findViewById(R.id.crime_date);
         updateDate();
+        mDateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager manager = getFragmentManager();
+                DatePickerFragment dialog = DatePickerFragment
+                        .newInstance(mCrime.getDate());
+                dialog.setTargetFragment(CrimeFragment.this, REQUEST_DATE);
+                dialog.show(manager, DIALOG_DATE);
+            }
+        });
         mReportButton = (Button) v.findViewById(R.id.crime_report);////////////
         mReportButton.setOnClickListener(new View.OnClickListener() {
+
             @Override//////
             public void onClick(View v) {
                 Intent i = new Intent(Intent.ACTION_SEND);
@@ -240,34 +250,4 @@ public class CrimeFragment extends Fragment {
         }
     }
 }
-
-   /* private void updateDate() {
-        mDateButton.setText(mCrime.getDate().toString());
-
-////////////////////////////////////
-        mDateButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentManager manager = getFragmentManager();
-                DatePickerFragment dialog = DatePickerFragment
-                        .newInstance(mCrime.getDate());
-                dialog.setTargetFragment(CrimeFragment.this, REQUEST_DATE);
-                dialog.show(manager, DIALOG_DATE);
-            }
-        });
-        mSolvedCheckBox = (CheckBox) v.findViewById(R.id.crime_solved);
-        return v;
-    }*/
-   /* @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode != Activity.RESULT_OK) {
-            return;
-        }
-        if (requestCode == REQUEST_DATE) {
-            Date date = (Date) data.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
-            mCrime.setDate(date);
-            updateDate();
-        }
-    }
-}*/
 

@@ -18,9 +18,9 @@ public class CrimeLab {
     private static CrimeLab sCrimeLab;
     private Context mContext;
     private SQLiteDatabase mDatabase;
-    private Crime mCrime;
-    private File mPhotoFile;
-    private EditText mTitleField;
+    //private Crime mCrime;
+    //private File mPhotoFile;
+    //private EditText mTitleField;
 
     /*@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,7 +44,7 @@ public class CrimeLab {
     }
     public void addCrime(Crime c){
         ContentValues values = getContentValues(c);
-        mDatabase.insert(CrimeTable.NAME, null, values);
+        mDatabase.insert(CrimeDbSchema.CrimeTable.NAME, null, values);
     }
 
     public List<Crime> getCrimes() {
@@ -65,7 +65,7 @@ public class CrimeLab {
 
     public Crime getCrime(UUID id) {
         CrimeCursorWrapper cursor = queryCrimes(
-                CrimeTable.Cols.UUID + " = ?",
+                CrimeDbSchema.CrimeTable.Cols.UUID + " = ?",
                 new String[] { id.toString() }
         );
         try {
@@ -81,8 +81,7 @@ public class CrimeLab {
     public File getPhotoFile(Crime crime) {
         File filesDir = mContext.getFilesDir();
         return new File(filesDir, crime.getPhotoFilename());
-        if (externalFilesDir == null) {
-        }
+        //if (externalFilesDir == null) {}
     }
     public void updateCrime(Crime crime) {
         String uuidString = crime.getId().toString();
