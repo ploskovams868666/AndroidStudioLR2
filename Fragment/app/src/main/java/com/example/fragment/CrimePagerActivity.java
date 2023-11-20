@@ -12,9 +12,8 @@ import androidx.viewpager.widget.ViewPager;
 import java.util.List;
 import java.util.UUID;
 
-public class CrimePagerActivity extends AppCompatActivity {
-    private static final String EXTRA_CRIME_ID =
-            "com.bignerdranch.android.criminalintent.crime_id";
+public class CrimePagerActivity extends AppCompatActivity implements CrimeFragment.Callbacks{
+    private static final String EXTRA_CRIME_ID = "com.bignerdranch.android.criminalintent.crime_id";
     private ViewPager mViewPager;
     private List<Crime> mCrimes;
     public static Intent newIntent(Context packageContext, UUID crimeId) {
@@ -23,6 +22,7 @@ public class CrimePagerActivity extends AppCompatActivity {
         return intent;
     }
     @SuppressLint("MissingInflatedId")
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,8 +52,8 @@ public class CrimePagerActivity extends AppCompatActivity {
             }
         }
     }
+    @Override
+    public void onCrimeUpdated(Crime crime) {
+    }
 }
-
-
-
 

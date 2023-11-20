@@ -1,7 +1,5 @@
 package com.example.fragment.database;
 
-import android.database.sqlite.SQLiteDatabase;
-
 public class CrimeDbSchema {
     public static final class CrimeTable{
         public static final String NAME = "crimes";
