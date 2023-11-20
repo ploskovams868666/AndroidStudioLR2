@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/linearLayout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="80dp">
 
     <TextView
         android:id="@+id/crime_title"
@@ -33,7 +33,8 @@
         app:layout_constraintEnd_toStartOf="@+id/crime_solved"
         app:layout_constraintHorizontal_bias="0.045"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/crime_title" />
+        app:layout_constraintTop_toBottomOf="@+id/crime_title"
+        app:layout_constraintVertical_bias="0.698"/>
 
     <ImageView
         android:id="@+id/crime_solved"
@@ -45,6 +46,7 @@
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintVertical_bias="0.511"
         app:srcCompat="@mipmap/ic_solved" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
