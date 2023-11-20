@@ -260,4 +260,5 @@ public class CrimeFragment extends Fragment {
             updatePhotoView();
         }
     }
+    
 }

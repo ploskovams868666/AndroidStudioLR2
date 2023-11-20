@@ -3,6 +3,7 @@ package com.example.fragment;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -38,7 +39,9 @@ public class CrimeListFragment extends Fragment {
         else if (item.getItemId()==R.id.show_subtitle) {
             mSubtitleVisible = !mSubtitleVisible;
             getActivity().invalidateOptionsMenu();
+            Log.d("MY_TAG", "First start");
             updateSubtitle();
+            Log.d("MY_TAG", "First end");
             return true;
         }
         else
@@ -86,7 +89,9 @@ public class CrimeListFragment extends Fragment {
             mAdapter.setCrimes(crimes);
             mAdapter.notifyDataSetChanged();
         }
+        Log.d("MY_TAG", "Second start");
         updateSubtitle();
+        Log.d("MY_TAG", "Second end");
     }
     private class CrimeHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView mTitleTextView;
@@ -158,8 +163,13 @@ public class CrimeListFragment extends Fragment {
         if (!mSubtitleVisible) {
             subtitle = null;
         }
-            AppCompatActivity activity = (AppCompatActivity) getActivity();
-            activity.getSupportActionBar().setSubtitle(subtitle);
+
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        if(activity.getSupportActionBar() == null)
+            Log.d("MY_TAG", "ActionBar is null");
+
+        activity.getSupportActionBar().setSubtitle(subtitle);
     }
+
 }
 

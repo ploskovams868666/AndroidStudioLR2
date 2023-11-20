@@ -29,5 +29,7 @@ public class CrimeListActivity extends SingleFragmentActivity
         CrimeListFragment listFragment = (CrimeListFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
         listFragment.updateUI();
     }
+
+
 }
 
