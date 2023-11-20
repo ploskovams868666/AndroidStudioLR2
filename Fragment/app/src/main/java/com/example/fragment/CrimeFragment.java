@@ -206,8 +206,7 @@ public class CrimeFragment extends Fragment {
         mPhotoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Uri uri = FileProvider.getUriForFile(getActivity(),
-                        "com.bignerdranch.android.criminalintent.fileprovider",
+                Uri uri = FileProvider.getUriForFile(getActivity(), "com.bignerdranch.android.criminalintent.fileprovider",
                         mPhotoFile);
                 captureImage.putExtra(MediaStore.EXTRA_OUTPUT, uri);
                 List<ResolveInfo> cameraActivities = getActivity()
@@ -255,9 +254,7 @@ public class CrimeFragment extends Fragment {
             }
         } else if (requestCode == REQUEST_PHOTO) {
 
-            Uri uri = FileProvider.getUriForFile(getActivity(),
-                    "com.bignerdranch.android.criminalintent.fileprovider",
-                    mPhotoFile);
+            Uri uri = FileProvider.getUriForFile(getActivity(), "com.bignerdranch.android.criminalintent.fileprovider", mPhotoFile);
             getActivity().revokeUriPermission(uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
             updateCrime();// оставить
             updatePhotoView();

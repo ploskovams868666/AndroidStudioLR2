@@ -1,5 +1,6 @@
 package com.example.fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -153,12 +154,12 @@ public class CrimeListFragment extends Fragment {
     private void updateSubtitle() {
         CrimeLab crimeLab = CrimeLab.get(getActivity());
         int crimeCount = crimeLab.getCrimes().size();
-        String subtitle = getString(R.string.subtitle_format, crimeCount);
+        @SuppressLint("StringFormatMatches") String subtitle = getString(R.string.subtitle_format, crimeCount);
         if (!mSubtitleVisible) {
             subtitle = null;
         }
-        AppCompatActivity activity = (AppCompatActivity) getActivity();
-        activity.getSupportActionBar().setSubtitle(subtitle);
+            AppCompatActivity activity = (AppCompatActivity) getActivity();
+            activity.getSupportActionBar().setSubtitle(subtitle);
     }
 }
 
