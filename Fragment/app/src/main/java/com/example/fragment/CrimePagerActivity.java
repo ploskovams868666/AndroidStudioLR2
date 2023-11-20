@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class CrimePagerActivity extends AppCompatActivity implements CrimeFragment.Callbacks{
-    private static final String EXTRA_CRIME_ID = "com.bignerdranch.android.criminalintent.crime_id";
+    private static final String EXTRA_CRIME_ID = "com.enfranchiser.android.criminal-intent.crime_id";
     private ViewPager mViewPager;
     private List<Crime> mCrimes;
     public static Intent newIntent(Context packageContext, UUID crimeId) {
@@ -27,7 +27,7 @@ public class CrimePagerActivity extends AppCompatActivity implements CrimeFragme
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crime_pager);
-        mViewPager = (ViewPager) findViewById(R.id.crime_view_pager);
+        mViewPager = findViewById(R.id.crime_view_pager);///////?
 
         UUID crimeId = (UUID) getIntent()
                 .getSerializableExtra(EXTRA_CRIME_ID);
