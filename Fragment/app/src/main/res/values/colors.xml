@@ -2,7 +2,10 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="colorPrimary">#4CAF50</color>
-    <color name="colorPrimaryDark">#2196F3</color>
-    <color name="colorAccent">#E91E63</color>
+    <color name="colorPrimary">#339E94</color>
+    <color name="colorPrimaryDark">#6027B0</color>
+    <color name="colorAccent">#4D9CDB</color>
+    <color name="ground_photo">#4E5478</color>
+    <color name="image_button">#8261BD</color>
+    <color name="ground">#ABB4EA</color>
 </resources>
