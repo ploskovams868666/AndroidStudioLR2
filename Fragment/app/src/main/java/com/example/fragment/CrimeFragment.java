@@ -1,7 +1,7 @@
 package com.example.fragment;
 
-import static java.text.DateFormat.getDateInstance;
 
+import static java.text.DateFormat.getDateInstance;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -100,7 +100,7 @@ public class CrimeFragment extends Fragment {
         } else {
             solvedString = getString(R.string.crime_report_unsolved);
         }
-        String dateFormat = "EEE, MMM dd";
+        String dateFormat = getDateInstance().format(mCrime.getDate());
         String dateString = DateFormat.format(dateFormat, mCrime.getDate()).toString();
         String suspect = mCrime.getSuspect();
         if (suspect == null) {
@@ -157,7 +157,7 @@ public class CrimeFragment extends Fragment {
         });
         mDateButton = (Button) v.findViewById(R.id.crime_date);
         updateDate();
-        mDateButton.setText(mCrime.getDate().toString());
+        //mDateButton.setText(mCrime.getDate().toString());
         mDateButton.setText(getDateInstance().format(mCrime.getDate()));
         mDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
