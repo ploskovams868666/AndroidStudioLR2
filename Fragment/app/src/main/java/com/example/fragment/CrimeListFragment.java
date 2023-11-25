@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import java.text.DateFormat;
@@ -73,6 +75,9 @@ public class CrimeListFragment extends Fragment {
                     (SAVED_SUBTITLE_VISIBLE);
         }
         updateUI();
+        CrimeTouchHelper touchHelper = new CrimeTouchHelper(mAdapter);
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(touchHelper);
+        itemTouchHelper.attachToRecyclerView(mCrimeRecyclerView);
         return view;
     }
     @Override
@@ -90,9 +95,9 @@ public class CrimeListFragment extends Fragment {
             mAdapter.setCrimes(crimes);
             mAdapter.notifyDataSetChanged();
         }
-        Log.d("MY_TAG", "Second start");
+
         updateSubtitle();
-        Log.d("MY_TAG", "Second end");
+
     }
     private class CrimeHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView mTitleTextView;
@@ -117,7 +122,7 @@ public class CrimeListFragment extends Fragment {
             mSolvedImageView.setVisibility(crime.isSolved() ? View.VISIBLE : View.GONE);
         }
     }
-    private class CrimeAdapter extends RecyclerView.Adapter<CrimeHolder> {
+    class CrimeAdapter extends RecyclerView.Adapter<CrimeHolder> {
         private List<Crime> mCrimes;
         public CrimeAdapter(List<Crime> crimes) {
             mCrimes = crimes;
@@ -131,6 +136,12 @@ public class CrimeListFragment extends Fragment {
         public void onBindViewHolder(CrimeHolder holder, int position) {
             Crime crime = mCrimes.get(position);
             holder.bind(crime);
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mCallbacks.onCrimeSelected(crime);
+                }
+            });
         }
         @Override
         public int getItemCount() {
@@ -138,6 +149,10 @@ public class CrimeListFragment extends Fragment {
         }
         public void setCrimes(List<Crime> crimes) {
             mCrimes = crimes;
+        }
+        public void deleteCrime(int position) {
+            CrimeLab.get(getActivity()).deleteCrime(mCrimes.get(position));
+            updateUI();
         }
     }
 
@@ -171,6 +186,5 @@ public class CrimeListFragment extends Fragment {
 
         activity.getSupportActionBar().setSubtitle(subtitle);
     }
-
 }
 
