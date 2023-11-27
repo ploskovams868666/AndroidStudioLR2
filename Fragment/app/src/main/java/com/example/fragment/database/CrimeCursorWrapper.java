@@ -13,7 +13,7 @@ public class CrimeCursorWrapper extends CursorWrapper {
     public CrimeCursorWrapper(Cursor cursor) {
         super(cursor);
     }
-
+//ыэыэыжыэвжэвжэывжвэвыэвэвжывэжвэ
     public Crime getCrime() {
         String uuidString = getString(getColumnIndex(CrimeDbSchema.CrimeTable.Cols.UUID));
         String title = getString(getColumnIndex(CrimeDbSchema.CrimeTable.Cols.TITLE));
