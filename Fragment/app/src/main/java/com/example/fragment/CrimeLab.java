@@ -2,6 +2,7 @@ package com.example.fragment;
 import android.content.ContentValues;
 
 import java.io.File;
+import java.util.TreeMap;
 import java.util.UUID;
 import android.content.Context;
 import android.database.Cursor;
@@ -19,6 +20,20 @@ public class CrimeLab {
     private Context mContext;
     private static CrimeLab sCrimeLab;
     private SQLiteDatabase mDatabase;
+    private List<Crime> mCrimes;
+
+    //private TreeMap<UUID, Integer> mtable;
+    //private CrimeLab(Context context){ 10 упр но оно не работает
+       // mtable = new TreeMap();
+        //for (int i = 0; i < 100; i++){
+            //mtable.put(crime.getId(), (Integer)mCrimes.size());
+       // }
+    //}
+
+    //public Crime getCrime(UUID id){
+        //return mCrimes.get(mtable.get(id));
+    //}
+
 
 
 
@@ -59,6 +74,8 @@ public class CrimeLab {
         return new CrimeCursorWrapper(cursor);
     }
 
+
+
     private static ContentValues getContentValues(Crime crime) {
         ContentValues values = new ContentValues();
         values.put(CrimeTable.Cols.UUID, crime.getId().toString());
@@ -92,10 +109,17 @@ public class CrimeLab {
         }
         return crimes;
     }
-
+//8
     private CrimeLab(Context context) {
         mContext = context.getApplicationContext();
         mDatabase = new CrimeBaseHelper(mContext).getWritableDatabase();
+        mCrimes = new ArrayList<>();
+        for (int i = 0; i < 100; i++) {
+            Crime crime = new Crime();
+            crime.setTitle("Crime #" + i);
+            crime.setSolved(i % 2 == 0);
+            mCrimes.add(crime);
+        }
     }
 
     public static CrimeLab get(Context context) {

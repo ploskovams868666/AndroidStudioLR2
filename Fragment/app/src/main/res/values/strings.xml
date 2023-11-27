@@ -27,4 +27,5 @@
         Crime scene photo (not set)
     </string>
     <string name="crime_photo_image_description">Crime scene photo (set)</string>
+    <string name="Police">Police</string>
 </resources>

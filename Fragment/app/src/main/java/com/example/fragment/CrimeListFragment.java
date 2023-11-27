@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.text.DateFormat;
 import java.util.List;
 import androidx.fragment.app.Fragment;
+
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.view.Menu;
@@ -117,9 +119,33 @@ public class CrimeListFragment extends Fragment {
         }
         public void bind(Crime crime) {
             mCrime = crime;
+            //String date;
+            //date = (String) DateFormat.format("EEEE, MMMM dd, yyyy kk:mm",mCrime.getDate());
+            //mDateTextView.setText(date); 9упр но оно тоже не работает
             mTitleTextView.setText(mCrime.getTitle());
             mDateTextView.setText(DateFormat.getDateTimeInstance().format(mCrime.getDate()));// отображение даты и времени в списке
             mSolvedImageView.setVisibility(crime.isSolved() ? View.VISIBLE : View.GONE);
+        }
+    }
+
+    private class CrimePoliceHolder extends RecyclerView.ViewHolder{
+        private TextView mTitleTextView;
+        private TextView mDateTextView;
+        private Crime mCrime;
+        private Button mButton;
+//8
+        public CrimePoliceHolder(LayoutInflater inflater, ViewGroup parent){
+            super(inflater.inflate(R.layout.list_item_crime, parent, false));
+            mTitleTextView = (TextView)itemView.findViewById(R.id.crime_title);
+            mDateTextView = (TextView)itemView.findViewById(R.id.crime_date);
+            mButton = (Button)itemView.findViewById(R.id.police_button);
+        }
+
+        public void bind(Crime crime){
+            mCrime = crime;
+            mTitleTextView.setText(mCrime.getTitle());
+            mDateTextView.setText(mCrime.getDate().toString());
+            mButton.setText(R.string.Police);
         }
     }
     class CrimeAdapter extends RecyclerView.Adapter<CrimeHolder> {
@@ -143,7 +169,16 @@ public class CrimeListFragment extends Fragment {
                 }
             });
         }
+
         @Override
+        public int getItemViewType(int postion) {
+            if (mCrimes.get(postion).getRequirePolice() == 1)
+                return 1;
+            else
+                return 0;
+        }
+
+            @Override
         public int getItemCount() {
             return mCrimes.size();
         }
