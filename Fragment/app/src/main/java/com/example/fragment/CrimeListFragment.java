@@ -32,7 +32,6 @@ public class CrimeListFragment extends Fragment {
     public interface Callbacks {
         void onCrimeSelected(Crime crime);
     }
-
         @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId()==R.id.new_crime) {
