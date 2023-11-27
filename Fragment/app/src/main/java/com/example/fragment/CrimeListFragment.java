@@ -2,6 +2,7 @@ package com.example.fragment;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -29,6 +30,7 @@ public class CrimeListFragment extends Fragment {
     private CrimeAdapter mAdapter;
     private boolean mSubtitleVisible;
     private CrimeListFragment.Callbacks mCallbacks;
+    int UpdatePosition = 0;//10
     public interface Callbacks {
         void onCrimeSelected(Crime crime);
     }
@@ -87,6 +89,7 @@ public class CrimeListFragment extends Fragment {
         super.onResume();
         updateUI();
     }
+    //10
     public void updateUI() {
         CrimeLab crimeLab = CrimeLab.get(getActivity());
         List<Crime> crimes = crimeLab.getCrimes();
@@ -106,7 +109,16 @@ public class CrimeListFragment extends Fragment {
         private TextView mDateTextView;
         private ImageView mSolvedImageView;
         private Crime mCrime;
-        public CrimeHolder(LayoutInflater inflater, ViewGroup parent) {
+
+       // @Override// 10 должно работать но неработает потому что класс краймактивити удалили
+       // public void onClick(View view){
+           // Intent intent = CrimeActivity.newIntent(getActivity(), mCrime.getId());
+            //UpdatePosition = getAdapterPosition();
+            //startActivity(intent);
+       // }
+
+
+    public CrimeHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.list_item_crime, parent, false));
             itemView.setOnClickListener(this);
             mTitleTextView = (TextView) itemView.findViewById(R.id.crime_title);
