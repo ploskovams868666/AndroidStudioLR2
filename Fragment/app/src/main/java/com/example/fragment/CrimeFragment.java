@@ -89,7 +89,7 @@ public class CrimeFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if ((item.getItemId()) == R.id.delete_crime) {
-            CrimeLab.get(getActivity()).removeCrime(mCrime);
+            CrimeLab.get(getActivity()).deleteCrime(mCrime);
             getActivity().finish();
                 return true;
         }
