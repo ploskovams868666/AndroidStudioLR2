@@ -54,11 +54,15 @@
         android:id="@+id/police_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="54dp"
+        android:layout_marginBottom="16dp"
         android:layout_weight="8"
         android:text="@string/Police"
         android:textAllCaps="false"
-        tools:layout_editor_absoluteX="120dp"
-        tools:layout_editor_absoluteY="23dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/crime_solved"
+        app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

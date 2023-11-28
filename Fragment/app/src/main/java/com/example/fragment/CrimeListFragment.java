@@ -2,7 +2,6 @@ package com.example.fragment;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,6 +21,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 public class CrimeListFragment extends Fragment {
@@ -30,7 +31,7 @@ public class CrimeListFragment extends Fragment {
     private CrimeAdapter mAdapter;
     private boolean mSubtitleVisible;
     private CrimeListFragment.Callbacks mCallbacks;
-    int UpdatePosition = 0;//10
+   //int UpdatePosition = 0;//10
     public interface Callbacks {
         void onCrimeSelected(Crime crime);
     }
@@ -140,7 +141,7 @@ public class CrimeListFragment extends Fragment {
         }
     }
 
-    private class CrimePoliceHolder extends RecyclerView.ViewHolder{
+    private class CrimePoliceHolder extends RecyclerView.ViewHolder {
         private TextView mTitleTextView;
         private TextView mDateTextView;
         private Crime mCrime;
