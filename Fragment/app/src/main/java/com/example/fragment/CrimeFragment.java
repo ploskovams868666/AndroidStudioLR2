@@ -97,6 +97,7 @@ public class CrimeFragment extends Fragment {
                     return super.onOptionsItemSelected(item);
             }
     }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
