@@ -118,9 +118,6 @@ public class CrimeFragment extends Fragment {
         updateCrime();
     }
 
-    private void updateDate() {
-        mDateButton.setText(getDateInstance().format(mCrime.getDate()));
-    }
 
     private String getCrimeReport() {
         String solvedString = null;
@@ -206,9 +203,6 @@ public class CrimeFragment extends Fragment {
         });
         mDateButton = (Button) v.findViewById(R.id.crime_date);
         updateDate();
-        mDateButton.setText(getDateInstance().format(mCrime.getDate()));
-        mDateButton = (Button) v.findViewById(R.id.crime_date);
-        updateDate();
         mDateButton.setText(mCrime.getDate().toString());
         mDateButton.setText(getDateInstance().format(mCrime.getDate()));
         mDateButton.setOnClickListener(new View.OnClickListener(){
@@ -290,12 +284,13 @@ public class CrimeFragment extends Fragment {
         return v;
     }
 
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode != Activity.RESULT_OK) {
             return;
         } else if (requestCode == REQUEST_TIME){
-            Date time = (Date) data.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
+            Date time = (Date) data.getSerializableExtra(TimePickerFragment.EXTRA_TIME);
             mCrime.setTime(time);
             updateCrime();
             updateTime();
@@ -330,8 +325,9 @@ public class CrimeFragment extends Fragment {
             updatePhotoView();
         }
     }
+    private void updateDate() {mDateButton.setText(getDateInstance().format(mCrime.getDate()));}
     private void updateTime() {
         mTimeButton.setText(DateFormat.format("kk:mm", mCrime.getDate()));
     }
-    
+
 }

@@ -2,6 +2,7 @@ package com.example.fragment;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,6 +29,9 @@ public class CrimeListFragment extends Fragment {
     private RecyclerView mCrimeRecyclerView;
     private CrimeAdapter mAdapter;
     private boolean mSubtitleVisible;
+    private Button mAddCrimeButton;
+    private TextView mNullCrimeListTextView;
+
     private CrimeListFragment.Callbacks mCallbacks;
     public interface Callbacks {
         void onCrimeSelected(Crime crime);
@@ -76,6 +80,17 @@ public class CrimeListFragment extends Fragment {
             mSubtitleVisible = savedInstanceState.getBoolean
                     (SAVED_SUBTITLE_VISIBLE);
         }
+        mNullCrimeListTextView = (TextView)view.findViewById(R.id.null_crime_list);
+        mAddCrimeButton = (Button)view.findViewById(R.id.add_crime);
+        mAddCrimeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Crime crime = new Crime();
+                CrimeLab.get(getActivity()).addCrime(crime);
+                Intent intent = CrimePagerActivity.newIntent(getActivity(), crime.getId());
+                startActivity(intent);
+            }
+        });
         updateUI();
         CrimeTouchHelper touchHelper = new CrimeTouchHelper(mAdapter);
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(touchHelper);
@@ -98,7 +113,14 @@ public class CrimeListFragment extends Fragment {
             mAdapter.notifyDataSetChanged();
         }
 
-        updateSubtitle();
+        if (crimes.size() != 0) {
+            mNullCrimeListTextView.setVisibility(View.INVISIBLE);
+            mAddCrimeButton.setVisibility(View.INVISIBLE);
+        } else {
+            mNullCrimeListTextView.setVisibility(View.VISIBLE);
+            mAddCrimeButton.setVisibility(View.VISIBLE);
+            updateSubtitle();
+        }
 
     }
     private class CrimeHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
