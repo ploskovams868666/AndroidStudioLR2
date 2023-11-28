@@ -19,6 +19,9 @@ import java.util.Date;
 import java.util.UUID;
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -33,9 +36,13 @@ import java.io.File;
 import java.util.List;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.viewpager.widget.ViewPager;
+
 public class CrimeFragment extends Fragment {
     private File mPhotoFile;
     private Crime mCrime;
+    private Button mFirstButton;
+    private Button mLastButton;
     private EditText mTitleField;
     private Button mDateButton;
     private CheckBox mSolvedCheckBox;
@@ -63,6 +70,9 @@ public class CrimeFragment extends Fragment {
     public interface Callbacks {
         void onCrimeUpdated(Crime crime);
     }
+
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +80,22 @@ public class CrimeFragment extends Fragment {
         UUID crimeId = (UUID) getArguments().getSerializable(ARG_CRIME_ID);
         mCrime = CrimeLab.get(getActivity()).getCrime(crimeId);
         mPhotoFile = CrimeLab.get(getActivity()).getPhotoFile(mCrime);
+    }
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.fragment_crime, menu);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if ((item.getItemId()) == R.id.delete_crime) {
+            CrimeLab.get(getActivity()).removeCrime(mCrime);
+            getActivity().finish();
+                return true;
+        }
+                else {
+                    return super.onOptionsItemSelected(item);
+            }
     }
     @Override
     public void onAttach(Context context) {
@@ -156,6 +182,24 @@ public class CrimeFragment extends Fragment {
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 mCrime.setSolved(isChecked);
                 updateCrime();
+            }
+        });
+        mFirstButton = (Button) v.findViewById(R.id.first_crime_button);
+        mFirstButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ViewPager pager = (ViewPager) getActivity().findViewById(R.id.crime_view_pager);
+                pager.setCurrentItem(0);
+
+            }
+        });
+
+        mLastButton = (Button) v.findViewById(R.id.last_crime_button);
+        mLastButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ViewPager pager = (ViewPager) getActivity().findViewById(R.id.crime_view_pager);
+                pager.setCurrentItem(CrimeLab.get(getActivity()).getCrimes().size()-1);
             }
         });
         mDateButton = (Button) v.findViewById(R.id.crime_date);

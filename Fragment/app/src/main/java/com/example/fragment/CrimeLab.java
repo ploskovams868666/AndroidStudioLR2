@@ -36,7 +36,9 @@ public class CrimeLab {
 
 
 
-
+    public void removeCrime(Crime c) {
+        mCrimes.remove(c);
+    }
     public Crime getCrime(UUID id) {
         CrimeCursorWrapper cursor = queryCrimes(
                 CrimeDbSchema.CrimeTable.Cols.UUID + " = ?",

@@ -82,5 +82,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/crime_report_text" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal">
 
+        <Button
+            android:id="@+id/first_crime_button"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="First crime" />
+
+        <Button
+            android:id="@+id/last_crime_button"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="last crime" />
+    </LinearLayout>
 </LinearLayout>
