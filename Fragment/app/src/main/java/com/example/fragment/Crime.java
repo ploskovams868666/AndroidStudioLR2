@@ -8,7 +8,7 @@ public class Crime {
     private String mTitle;
     private Date mDate;
     private boolean mSolved;
-    private int mRequirePolice;
+    private int mRequirePolice;//8
     private String mSuspect;
 
     public Crime() {
