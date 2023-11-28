@@ -8,6 +8,7 @@ public class Crime {
     private String mTitle;
     private Date mDate;
     private boolean mSolved;
+    private Date mTime;
     private int mRequirePolice;
     private String mSuspect;
 
@@ -38,6 +39,7 @@ public class Crime {
     public void setDate(Date date) {
         mDate = date;
     }
+    public void setTime(Date time) {mTime = time;}
 
     public boolean isSolved() {
         return mSolved;

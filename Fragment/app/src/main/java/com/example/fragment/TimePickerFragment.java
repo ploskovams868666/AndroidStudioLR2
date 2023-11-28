@@ -57,11 +57,12 @@ public class TimePickerFragment extends DialogFragment {
         return new AlertDialog.Builder(getActivity())
                 .setView(v)
                 .setTitle(R.string.time_picker_title)
-                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                .setPositiveButton(android.R.string.ok,
+                        new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                int hour = mTimePicker.getHour();
-                                int minute = mTimePicker.getMinute();
+                                // int hour = mTimePicker.getHour();
+                                // int minute = mTimePicker.getMinute();
                                 sendResult(Activity.RESULT_OK);
                             }
                         })
@@ -79,3 +80,5 @@ public class TimePickerFragment extends DialogFragment {
     }
 
 }
+
+

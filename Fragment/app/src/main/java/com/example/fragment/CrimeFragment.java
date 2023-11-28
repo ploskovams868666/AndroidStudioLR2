@@ -97,7 +97,6 @@ public class CrimeFragment extends Fragment {
                     return super.onOptionsItemSelected(item);
             }
     }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -185,13 +184,15 @@ public class CrimeFragment extends Fragment {
                 updateCrime();
             }
         });
-        mFirstButton = (Button) v.findViewById(R.id.first_crime_button);
-        mFirstButton.setOnClickListener(new View.OnClickListener() {
+        mTimeButton = (Button) v.findViewById(R.id.crime_time);
+        updateTime();
+        mTimeButton.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View v) {
-                ViewPager pager = (ViewPager) getActivity().findViewById(R.id.crime_view_pager);
-                pager.setCurrentItem(0);
-
+            public void onClick (View v){
+                FragmentManager manager = getFragmentManager();
+                TimePickerFragment dialog = TimePickerFragment.newInstance(mCrime.getDate());
+                dialog.setTargetFragment(CrimeFragment.this, REQUEST_TIME);
+                dialog.show(manager, DIALOG_TIME);
             }
         });
 
@@ -293,9 +294,9 @@ public class CrimeFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode != Activity.RESULT_OK) {
             return;
-        }else if (requestCode == REQUEST_TIME){
+        } else if (requestCode == REQUEST_TIME){
             Date time = (Date) data.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
-            mCrime.setDate(time);
+            mCrime.setTime(time);
             updateCrime();
             updateTime();
         } else if (requestCode == REQUEST_DATE) {

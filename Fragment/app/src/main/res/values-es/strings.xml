@@ -29,5 +29,9 @@
         Foto de la escena del crimen (no fijado)
     </string>
     <string name="crime_photo_image_description">Foto de la escena del crimen (fijado)</string>
+    <plurals name="subtitle_plural">
+        <item quantity="one">%1$d crime</item>
+        <item quantity="other">%1$d crimes</item>
+    </plurals>
 
 </resources>
