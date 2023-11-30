@@ -36,6 +36,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/crime_title" />
 
+    <Button
+        android:id="@+id/require_police"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="133dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginEnd="45dp"
+        android:layout_marginBottom="8dp"
+        android:text="call 110"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/crime_solved"
+        app:layout_constraintStart_toEndOf="@+id/crime_title"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:id="@+id/crime_solved"
         android:layout_width="wrap_content"

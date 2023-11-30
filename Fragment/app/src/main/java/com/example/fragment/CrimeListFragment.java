@@ -5,9 +5,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -45,6 +48,7 @@ public class CrimeListFragment extends Fragment {
         private TextView mTitleTextView;
         private TextView mDateTextView;
         private ImageView mSolvedImageView;
+        private Button mRequirePolice;//8упр
         private Crime mCrime;
         public CrimeHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.list_item_crime, parent, false));
@@ -66,22 +70,78 @@ public class CrimeListFragment extends Fragment {
             mDateTextView.setText(mCrime.getDate().toString());
             mSolvedImageView.setVisibility(crime.isSolved() ? View.VISIBLE : View.GONE);
         }
+
+
     }
 
-    private class CrimeAdapter extends RecyclerView.Adapter<CrimeHolder> {
+    //8 упр
+    private class requirePoliceCrimeHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        private TextView mTitleTextView;
+        private TextView mDateTextView;
+        private Button mRequirePolice;
+        private Crime mCrime;
+        private void bind(Crime crime) {
+            mCrime = crime;
+            mTitleTextView.setText(mCrime.getmTitle());
+            mDateTextView.setText(mCrime.getmDate().toString());
+        }
+
+        public requirePoliceCrimeHolder(LayoutInflater inflater,ViewGroup parent) {
+            super(inflater.inflate(R.layout.list_item_crime,parent,false));
+
+            mTitleTextView = (TextView)itemView.findViewById(R.id.crime_title);
+            mDateTextView = (TextView)itemView.findViewById(R.id.crime_date);
+            mRequirePolice = (Button)itemView.findViewById(R.id.require_police);
+            itemView.setOnClickListener(this);
+        }
+        @Override
+        public void onClick(View v) {
+            Toast.makeText(getActivity(),"Require Police!",Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private class CrimeAdapter extends RecyclerView.Adapter/*<CrimeHolder>*/ {
         private List<Crime> mCrimes;
         public CrimeAdapter(List<Crime> crimes) {
             mCrimes = crimes;
         }
-        @Override
+        /*@Override
         public CrimeHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
             return new CrimeHolder(layoutInflater, parent);
-        }
+        }*/
         @Override
+        public int getItemViewType(int position) {
+            if(mCrimes.get(position).ismRequiresPolice()) {
+                return 1;
+            }else{
+                return 0;
+            }
+        }
+
+        /*@Override
         public void onBindViewHolder(CrimeHolder holder, int position) {
             Crime crime = mCrimes.get(position);
             holder.bind(crime);
+        }*/
+        @NonNull
+        @Override
+        public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i){
+            LayoutInflater layoutInflater=LayoutInflater.from(getActivity());
+            if (i == 1)
+                return new requirePoliceCrimeHolder(layoutInflater, viewGroup);
+            else
+                return new CrimeHolder(layoutInflater, viewGroup);
+        }
+        @Override
+        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+            if (holder instanceof CrimeHolder) {
+                Crime crime = mCrimes.get(position);
+                ((CrimeHolder)holder).bind(crime);
+            }else if (holder instanceof requirePoliceCrimeHolder){
+                Crime crime = mCrimes.get(position);
+                ((requirePoliceCrimeHolder)holder).bind(crime);
+            }
         }
         @Override
         public int getItemCount() {
