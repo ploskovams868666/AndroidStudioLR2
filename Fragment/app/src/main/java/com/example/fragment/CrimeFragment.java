@@ -24,6 +24,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -62,6 +63,7 @@ public class CrimeFragment extends Fragment {
     private static final int REQUEST_CONTACT = 1;
     private static final int REQUEST_PHOTO = 2;
     private static final String DIALOG_DATE = "DialogDate";
+    private static final String DIALOG_ZOOM_IMAGE = "DialogZoomDisplay";
 
     public static CrimeFragment newInstance(UUID crimeId) {
         Bundle args = new Bundle();
@@ -291,7 +293,23 @@ public class CrimeFragment extends Fragment {
             }
         });
         mPhotoView = (ImageView) v.findViewById(R.id.crime_photo);
-        updatePhotoView();
+        //updatePhotoView();
+
+        mPhotoView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                updatePhotoView();
+                mPhotoView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+            }
+        });
+
+        mPhotoView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                ImageDialogFragment.newInstance(mPhotoFile).show(fragmentManager, DIALOG_ZOOM_IMAGE);
+            }
+        });
         updateDate();
 
         mCallButton = (Button) v.findViewById(R.id.call_suspect);
