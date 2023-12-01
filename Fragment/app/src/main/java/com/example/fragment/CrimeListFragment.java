@@ -132,7 +132,7 @@ public class CrimeListFragment extends Fragment {
             super(inflater.inflate(R.layout.list_item_crime, parent, false));
             itemView.setOnClickListener(this);
             mTitleTextView = (TextView) itemView.findViewById(R.id.crime_title);
-            mDateTextView =  itemView.findViewById(R.id.crime_date);
+            mDateTextView = (TextView) itemView.findViewById(R.id.crime_date);
             mSolvedImageView = (ImageView) itemView.findViewById(R.id.crime_solved);
         }
         @Override
@@ -150,26 +150,7 @@ public class CrimeListFragment extends Fragment {
         }
     }
 
-    private class CrimePoliceHolder extends RecyclerView.ViewHolder{
-        private TextView mTitleTextView;
-        private TextView mDateTextView;
-        private Crime mCrime;
-        private Button mButton;
-//8
-        public CrimePoliceHolder(LayoutInflater inflater, ViewGroup parent){
-            super(inflater.inflate(R.layout.list_item_crime, parent, false));
-            mTitleTextView = (TextView)itemView.findViewById(R.id.crime_title);
-            mDateTextView = (TextView)itemView.findViewById(R.id.crime_date);
-            mButton = (Button)itemView.findViewById(R.id.police_button);
-        }
 
-        public void bind(Crime crime){
-            mCrime = crime;
-            mTitleTextView.setText(mCrime.getTitle());
-            mDateTextView.setText(mCrime.getDate().toString());
-            mButton.setText(R.string.Police);
-        }
-    }
     class CrimeAdapter extends RecyclerView.Adapter<CrimeHolder> {
         private List<Crime> mCrimes;
         public CrimeAdapter(List<Crime> crimes) {
@@ -184,6 +165,7 @@ public class CrimeListFragment extends Fragment {
         public void onBindViewHolder(CrimeHolder holder, int position) {
             Crime crime = mCrimes.get(position);
             holder.bind(crime);
+            //holder.mDateTextView.setText(DateFormat.getDateTimeInstance().format(crime.getDate()));
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

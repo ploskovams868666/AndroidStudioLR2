@@ -41,7 +41,6 @@ import androidx.viewpager.widget.ViewPager;
 public class CrimeFragment extends Fragment {
     private File mPhotoFile;
     private Crime mCrime;
-    private Button mFirstButton;
     private Button mLastButton;
     private EditText mTitleField;
     private Button mDateButton;
@@ -70,9 +69,6 @@ public class CrimeFragment extends Fragment {
     public interface Callbacks {
         void onCrimeUpdated(Crime crime);
     }
-
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,8 +113,6 @@ public class CrimeFragment extends Fragment {
         CrimeLab.get(getActivity()).updateCrime(mCrime);
         updateCrime();
     }
-
-
     private String getCrimeReport() {
         String solvedString = null;
         if (mCrime.isSolved()) {
@@ -156,7 +150,7 @@ public class CrimeFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_crime, container, false);
 
         mTitleField = (EditText) v.findViewById(R.id.crime_title);
-        mTitleField.setText(mCrime.getTitle());////////////////
+        mTitleField.setText(mCrime.getTitle());
         mTitleField.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -201,30 +195,7 @@ public class CrimeFragment extends Fragment {
                 pager.setCurrentItem(CrimeLab.get(getActivity()).getCrimes().size()-1);
             }
         });
-        mDateButton = (Button) v.findViewById(R.id.crime_date);
-        updateDate();
-        mDateButton.setText(mCrime.getDate().toString());
-        mDateButton.setText(getDateInstance().format(mCrime.getDate()));
-        mDateButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick (View v){
-                FragmentManager manager = getFragmentManager();
-                DatePickerFragment dialog = DatePickerFragment.newInstance(mCrime.getDate());
-                dialog.setTargetFragment(CrimeFragment.this, REQUEST_DATE);
-                dialog.show(manager, DIALOG_DATE);
-            }
-        });
-        mTimeButton = (Button) v.findViewById(R.id.crime_time);
-        updateTime();
-        mTimeButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick (View v){
-                FragmentManager manager = getFragmentManager();
-                TimePickerFragment dialog = TimePickerFragment.newInstance(mCrime.getDate());
-                dialog.setTargetFragment(CrimeFragment.this, REQUEST_TIME);
-                dialog.show(manager, DIALOG_TIME);
-            }
-        });
+
         mReportButton = (Button) v.findViewById(R.id.crime_report);////////////
         mReportButton.setOnClickListener(new View.OnClickListener() {
 
@@ -240,9 +211,20 @@ public class CrimeFragment extends Fragment {
             }
         });
 
+        mDateButton = (Button) v.findViewById(R.id.crime_date);
+        updateDate();
+        mDateButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick (View v){
+                FragmentManager manager = getFragmentManager();
+                DatePickerFragment dialog = DatePickerFragment.newInstance(mCrime.getDate());
+                dialog.setTargetFragment(CrimeFragment.this, REQUEST_DATE);
+                dialog.show(manager, DIALOG_DATE);
+            }
+        });
 
         final Intent pickContact = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
-        //pickContact.addCategory(Intent.CATEGORY_HOME);
+
         mSuspectButton = (Button) v.findViewById(R.id.crime_suspect);
         mSuspectButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -280,7 +262,6 @@ public class CrimeFragment extends Fragment {
         });
         mPhotoView = (ImageView) v.findViewById(R.id.crime_photo);
         updatePhotoView();
-        updateDate();
         return v;
     }
 
