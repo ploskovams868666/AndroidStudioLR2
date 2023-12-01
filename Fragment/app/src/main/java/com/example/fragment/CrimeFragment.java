@@ -262,6 +262,7 @@ public class CrimeFragment extends Fragment {
         });
         mPhotoView = (ImageView) v.findViewById(R.id.crime_photo);
         updatePhotoView();
+        updateDate();
         return v;
     }
 
