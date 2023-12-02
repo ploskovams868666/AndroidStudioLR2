@@ -44,7 +44,7 @@
         android:layout_marginTop="7dp"
         android:layout_marginEnd="45dp"
         android:layout_marginBottom="8dp"
-        android:text="call 110"
+        android:text="Police"
         android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/crime_solved"
